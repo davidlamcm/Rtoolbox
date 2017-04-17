@@ -1,8 +1,8 @@
 #' to be implemented shortly
 #' @export
 
-getFieldMedian <-function(){
-
+getFieldMedian <-function(tickerList, field){
+  
 
   }
 
