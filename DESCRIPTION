@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: person("david", "lam", email = "davidlamcm@gmail.com", role = c("aut", "cre"))
 Description: personal R functions repository
 Depends:
-    R (>= 3.2.5), doParallel, foreach, ggplot2, rJava, xlsx, Rblpapi, reshape2, xts, RcppRoll, plotly, devtools
+    R (>= 3.2.5), doParallel, foreach, ggplot2, xlsx, Rblpapi, reshape2, xts, RcppRoll, plotly, devtools
 License: 
 Encoding: UTF-8
 LazyData: true

@@ -4,7 +4,7 @@
 \alias{getFieldMedian}
 \title{to be implemented shortly}
 \usage{
-getFieldMedian()
+getFieldMedian(tickerList, field)
 }
 \description{
 to be implemented shortly
