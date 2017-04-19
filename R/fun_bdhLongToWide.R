@@ -12,7 +12,7 @@ bdhLongToWide <-function(bdhList, cl){
 combineDate = foreach(bdh = bdhList) %dopar% {
   bdh$date
 }
-combineDate = sort(unique(as.Date(unlist(combineDate))))
+combineDate = sort(as.Date(unique(as.character(unlist(combineDate)))))
 convertedBDH  = foreach(bdh = bdhList) %dopar%{
   output = rep(NA, length(combineDate))
   names(output) = combineDate
