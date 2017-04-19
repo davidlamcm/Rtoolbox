@@ -10,9 +10,9 @@ bdhLongToWide <-function(bdhList, cl){
 
 
 combineDate = foreach(bdh = bdhList) %dopar% {
-  bdh$date
+ as.character( bdh$date)
 }
-combineDate = sort(as.Date(unique(as.character(unlist(combineDate)))))
+combineDate = sort(as.Date(unique(unlist(combineDate)),format = "%Y-%m-%d"))
 convertedBDH  = foreach(bdh = bdhList) %dopar%{
   output = rep(NA, length(combineDate))
   names(output) = combineDate
