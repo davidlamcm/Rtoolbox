@@ -2,11 +2,13 @@
 % Please edit documentation in R/fun_bdhLongToWide.R
 \name{bdhLongToWide}
 \alias{bdhLongToWide}
-\title{given a list of stocks with data from bdh function, convert the list into a table}
+\title{given a list of stocks with data from bdh function, convert the list into a table 
+cl is the cluster created by doParallel , if this parameter is not given , the function will spawn the cluster itself}
 \usage{
 bdhLongToWide(bdhList, cl)
 }
 \description{
-given a list of stocks with data from bdh function, convert the list into a table
+given a list of stocks with data from bdh function, convert the list into a table 
+cl is the cluster created by doParallel , if this parameter is not given , the function will spawn the cluster itself
 }
 
