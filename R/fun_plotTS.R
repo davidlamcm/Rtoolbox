@@ -1,6 +1,6 @@
 #' this function will be deprecated. 
 #' wrapper for ggplot 
-#' 
+#' @export
 plotTS <-function(ts, title, additional = F, legend = "fx" ,...){
   if(class(ts) == "numeric"){
     df = data.frame(date = as.Date(names(ts)), fx = ts, legend =legend)
