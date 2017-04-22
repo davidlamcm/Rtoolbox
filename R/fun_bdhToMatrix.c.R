@@ -18,15 +18,6 @@ bdhToMatrix.c <-function(bdhList, timeSeries, validDays =730, lag =0 ){
   timeSeries.char = as.character(timeSeries)
   
   #create matrix 
-  mappingList = foreach(ticker = names(bdhList))%do%{
-    bdh.dt = as.numeric(bdhList[[ticker]]$date)
-    vect = bdhList[[ticker]][,2]
-    dtPoses = matchDate(bdh.dt,timeSeries.int,validDays, lag)
-    dt = as.character(bdh.dt[dtPoses])
-    value = bdhList[[ticker]][,2][dtPoses]
-    list(dt,value)
-  }
-  
   mappedList = foreach(bdh = bdhList)%do%{
     bdh.dt =bdh$date
     bdh.dt.int = as.numeric(bdh$date)
