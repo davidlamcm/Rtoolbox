@@ -35,7 +35,7 @@ bdhToMatrix.c <-function(bdhList, timeSeries, validDays =730, lag =0 ){
     ele$value
   })
   
-  colnames(bdhMatrix) = colnames(dateMatrix)
-  rownames(bdhMatrix) = rownames(dateMatrix)
+  colnames(bdhMatrix) = names(bdhList)
+  rownames(bdhMatrix) = timeSeries.char
   return( list(value  = bdhMatrix, date = dateMatrix))
 }
