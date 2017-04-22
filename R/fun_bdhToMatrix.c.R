@@ -24,7 +24,7 @@ bdhToMatrix.c <-function(bdhList, timeSeries, validDays =730, lag =0 ){
     vect = bdh[,2]
     dtPoses = matchDate(bdh.dt.int,timeSeries.int,validDays, lag)
     dt = as.character(bdh.dt[dtPoses])
-    value = vect[bdh.dt[dtPoses]]
+    value = vect[dtPoses]
     list(dt =dt,value=value)
   }
   
