@@ -5,7 +5,7 @@
 \title{c implementation of the bdhToMatrix 
 return a list of matrix which comprise of a consolidated value matrix and one date matrix given list of bdh data}
 \usage{
-bdhToMatrix.c(bdhList, timeSeries, validDays = 730, lag = 0, cl)
+bdhToMatrix.c(bdhList, timeSeries, validDays = 730, lag = 0)
 }
 \arguments{
 \item{bdhList}{list of bdh data to be converted to matrix}

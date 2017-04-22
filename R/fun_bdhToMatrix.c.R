@@ -8,12 +8,8 @@
 #'@export
 
 
-bdhToMatrix.c <-function(bdhList, timeSeries, validDays =730, lag =0 , cl){
-  if( missing(cl)){
-    cl <- makeCluster(detectCores()-1)
-    registerDoParallel(cl)
-  }
-  
+bdhToMatrix.c <-function(bdhList, timeSeries, validDays =730, lag =0 ){
+
   if(!class(timeSeries) =="Date"){
     tryCatch({timeSeries = as.Date(timeSeries)}, error=function(){print("timeSeries is not class Date and failed to convert to Date")})
   }
@@ -47,10 +43,6 @@ bdhToMatrix.c <-function(bdhList, timeSeries, validDays =730, lag =0 , cl){
   bdhMatrix =do.call(cbind,  foreach(ele = mappedList)%do%{
     ele$value
   })
-  
-  
-  dateMatrix = do.call(function(x,y){cbind(x$dt,y$dt)},mappingList)
-  bdhMatrix =  do.call(function(x,y){cbind(x$value,y$value)},mappingList)
   
   colnames(bdhMatrix) = colnames(dateMatrix)
   rownames(bdhMatrix) = rownames(dateMatrix)
