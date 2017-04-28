@@ -1,6 +1,6 @@
 #' lag a matrix by n days, fill the missing data with the closest one
 #' @export
-lag.matrix <- function(mat, n = 1){
+lagMatrix <- function(mat, n = 1){
   output = mat
   if(n==0){
     return(output)
