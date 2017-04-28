@@ -4,7 +4,6 @@
 
 
 evalNAV <-function(NAV,benchmark){
-  library("PerformanceAnalytics");  library("zoo"); library("xts")
   if(missing(benchmark)){
     benchmark=NAV
     print("benchmark is not provided, will use the NAV as its own benchmark")
@@ -81,7 +80,6 @@ evalNAV <-function(NAV,benchmark){
   stats[["WeeklyWinRate"]] = matrix(colSums(df.w[, c("NAV.ret","bm.ret")]>1) /(colSums(df.w[, c("NAV.ret","bm.ret")]!=1)), ncol = 2, dimnames = list("WeeklyWinRate", c("NAV.ret","bm.ret")))
   #MonthlyWinRate
   stats[["MonthlyWinRate"]] = matrix(colSums(df.m[, c("NAV.ret","bm.ret")]>1) /(colSums(df.m[, c("NAV.ret","bm.ret")]!=1)), ncol = 2, dimnames = list("MonthlyWinRate", c("NAV.ret","bm.ret")))
-
 
   #CAGR
   stats[["CAGR"]] = matrix(stats[["NAV"]]^(1/stats[["Year"]] )-1, ncol = 2, dimnames = list("CAGR", c("NAV.ret","bm.ret")))
