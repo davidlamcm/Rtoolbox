@@ -5,7 +5,7 @@ minTurnover <-function(mat, thershold = 0.05){
   out = mat
   pos = mat[1,]
   for(i in 1:(nrow(out)-1)){
-    if(sqrt(sum((pos-mat[i,])**2))>thershold){
+    if(sum(abs(pos-mat[i,]))>thershold){
         out[i, ] = mat[i, ]
         pos = mat[i, ]      
     }else{
