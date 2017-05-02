@@ -2,7 +2,7 @@
 #' @export
 #'
 
-plotMatrix <-function(mat, title=""){
+plotMatrix <-function(mat, title=paste("plot time:",Sys.time())){
   if(sum(class(b)=="xts")==1){
     mat = as.matrix(mat)
     }
