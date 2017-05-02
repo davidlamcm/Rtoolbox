@@ -8,6 +8,11 @@ plotMatrix <-function(mat, title=""){
     }
   mat.long = melt(mat)
   colnames(mat.long) = c("date","series","value")
-  mat.long$date = as.Date(as.character(mat.long$date))
-  return(ggplot(e,aes(x=date,y=value,color=series))+geom_line()+ggtitle(title))
+  if(!is.factor(mat.long$series)){
+      mat.long$series = as.factor(mat.long$series)
+  }
+  if(is.factor(mat.long$date)){
+    mat.long$date = as.Date(as.character(mat.long$date))
+  }
+  return(ggplot(mat.long,aes(x=date,y=value,color=series))+geom_line()+ggtitle(title))
   }
