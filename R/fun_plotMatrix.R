@@ -15,4 +15,4 @@ plotMatrix <-function(mat, title=paste("plot time:",Sys.time())){
     mat.long$date = as.Date(as.character(mat.long$date))
   }
   return(ggplot(mat.long,aes(x=date,y=value,color=series))+geom_line()+ggtitle(title))
-  }
+}

@@ -36,6 +36,8 @@ bdhToMatrix <-function(bdhList, timeSeries, validDays =Inf, lag =0 , cl){
     vect[dateMatrix[,ticker]]
   })
   bdhMatrix = do.call(cbind,temp)
+  
+ 
   colnames(bdhMatrix) = colnames(dateMatrix)
   rownames(bdhMatrix) = rownames(dateMatrix)
   return( list(value  = bdhMatrix, date = dateMatrix))

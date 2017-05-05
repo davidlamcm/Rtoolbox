@@ -4,7 +4,7 @@
 \alias{plotMatrix}
 \title{given a matrix or xts object, ggplot the series}
 \usage{
-plotMatrix(mat, title = "")
+plotMatrix(mat, title = paste("plot time:", Sys.time()))
 }
 \description{
 given a matrix or xts object, ggplot the series

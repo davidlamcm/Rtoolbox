@@ -5,7 +5,15 @@
 \title{given future code , list of months code , starting year
 return the list of future code}
 \usage{
-getFutChain(futureCode, months, years)
+getFutChain(futureCode, months = c("F", "G", "H", "J", "K", "M", "N", "Q",
+  "U", "V", "X", "Z"), years)
+}
+\arguments{
+\item{futureCode}{future code such as HC/HI/XU/ES}
+
+\item{months}{a vector of months of the future chain e.g.c("F","G","H","J","K","M","N","Q","U","V","X","Z")}
+
+\item{years}{a vector of years eq. c(99:16,7)}
 }
 \description{
 given future code , list of months code , starting year

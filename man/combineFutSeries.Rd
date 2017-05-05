@@ -2,11 +2,13 @@
 % Please edit documentation in R/fun_combineFutSeries.R
 \name{combineFutSeries}
 \alias{combineFutSeries}
-\title{given a list of futres chain series , concatenate them into one single time serie}
+\title{given a list of futures chain series , concatenate them into one single time serie
+the list of futures chain series must have the fields c("last_price","volume") or else wont work}
 \usage{
 combineFutSeries(futSeries)
 }
 \description{
-given a list of futres chain series , concatenate them into one single time serie
+given a list of futures chain series , concatenate them into one single time serie
+the list of futures chain series must have the fields c("last_price","volume") or else wont work
 }
 
