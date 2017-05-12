@@ -3,7 +3,7 @@
 #'
 
 plotMatrix <-function(mat, title=paste("plot time:",Sys.time())){
-  if(sum(class(b)=="xts")==1){
+  if(sum(class(mat)=="xts")==1){
     mat = as.matrix(mat)
     }
   mat.long = melt(mat)
