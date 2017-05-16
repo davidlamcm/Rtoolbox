@@ -4,7 +4,7 @@
 \alias{ROR}
 \title{wrapperfunction to calculate return of data.frame/ xts}
 \usage{
-ROR(data)
+ROR(mat, keepNAs = FALSE)
 }
 \description{
 wrapperfunction to calculate return of data.frame/ xts
