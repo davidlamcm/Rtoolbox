@@ -8,6 +8,8 @@
 #'@param lag number of day lag, default is 0
 #'@export
 bdhLastestToMatrix <-function(bdhList, timeSeries, validDays =Inf, lag =0 , cl){
+  warning("to be deprecated later, please use c++ speed up version bdhToMatrix.c")
+  
   if( missing(cl)){
     cl <- makeCluster(detectCores()-1)
     registerDoParallel(cl)

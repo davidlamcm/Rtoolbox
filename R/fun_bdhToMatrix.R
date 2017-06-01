@@ -1,3 +1,4 @@
+#"to be deprecated later please use bdhToMatrix.c
 #'return a list of matrix which comprise of a consolidated value matrix and one date matrix given list of bdh data
 #'@param bdhList list of bdh data to be converted to matrix
 #'@param timeSeries date or character vector that determine the resulting matrix's rownames
@@ -6,6 +7,7 @@
 #'@param lag number of day lag, default is 0
 #'@export
 bdhToMatrix <-function(bdhList, timeSeries, validDays =Inf, lag =0 , cl){
+  warning("to be deprecated later, please use c++ speed up version bdhToMatrix.c")
   if( missing(cl)){
     cl <- makeCluster(detectCores()-1)
     registerDoParallel(cl)

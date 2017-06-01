@@ -19,8 +19,7 @@ ROR <-function(mat, keepNAs = FALSE ){
     temp = data/(rbind(NA,data)[-(nrow(data)+1),])
     rownames(temp) =rownames(data)
     temp[1,]=1
-    temp[is.na(temp)]= 1
-
+    temp[is.na(temp)] = 1
   }
   if(keepNAs){
     temp[is.na(mat)] = NA
