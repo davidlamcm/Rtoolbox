@@ -2,18 +2,18 @@
 #' compute the statistics of the time series
 #' @export
 
-
-evalNAV <-function(NAV,benchmark){
-  if(missing(benchmark)){
+evalNAV <-function(NAV,benchmark=NULL){
+  if(is.null(benchmark)){
     print("benchmark is not provided, beta will not be calculated")
-    if(!"zoo" %in% class(benchmark)){
-      stop("benchmark has to be 'zoo' object")}
+  }else{
+    if(!"xts" %in% class(benchmark)){
+      stop("benchmark has to be 'xts' object")}
     if(sum(is.na(benchmark))>0){
-      stop("benchmark contain NAs")
-    }
+      stop("benchmark contain NAs")}
   }
-  if(!"zoo" %in% class(NAV) ){
-    stop("NAV has to be 'zoo' object")}
+  
+  if(!"xts" %in% class(NAV) ){
+    stop("NAV has to be 'xts' object")}
   if(sum(is.na(NAV)) >0){
     stop("NAV contain NAs")
   }
@@ -23,9 +23,9 @@ evalNAV <-function(NAV,benchmark){
   ret = df/lag(df,k=1)
   ret[1, ]=1
   
-  if(!missing(benchmark)){
-    benchmark= benchmark/as.numeric(benchmark[1,])
-    bm.ret  = benchmark/lag(benchmark,k=1)
+  if(!is.null(benchmark)){
+    bm= benchmark/as.numeric(benchmark[1,])
+    bm.ret  = bm/lag(bm,k=1)
     bm.ret[1, ]=1
   }
   
@@ -81,7 +81,7 @@ evalNAV <-function(NAV,benchmark){
   #SharpeRatio
   stats[["SharpeRatio"]] =  SharpeRatio.annualized(ret-1, scale=nrow(df)/ stats[["Year"]][1])
   
-  if(!missing(benchmark)){
+  if(!is.null(benchmark)){
     #BETA
     stats[["Beta"]] = matrix(c(CAPM.beta(ret-1,bm.ret-1),1),nrow=1)
     #BETA.bull
