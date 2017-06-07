@@ -5,7 +5,7 @@
 \title{given a time seeries of NAV  and benchmark (optional),
 compute the statistics of the time series}
 \usage{
-evalNAV(NAV, benchmark)
+evalNAV(NAV, benchmark = NULL)
 }
 \description{
 given a time seeries of NAV  and benchmark (optional),
