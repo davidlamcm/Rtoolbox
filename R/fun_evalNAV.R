@@ -5,92 +5,112 @@
 
 evalNAV <-function(NAV,benchmark){
   if(missing(benchmark)){
-    benchmark=NAV
-    print("benchmark is not provided, will use the NAV as its own benchmark")
+    print("benchmark is not provided, beta will not be calculated")
+    if(!"zoo" %in% class(benchmark)){
+      stop("benchmark has to be 'zoo' object")}
+    if(sum(is.na(benchmark))>0){
+      stop("benchmark contain NAs")
     }
-  if(!"zoo" %in% class(NAV) | !"zoo" %in% class(benchmark)){
-    stop("NAV and benchmark has to be 'zoo' object")}
+  }
+  if(!"zoo" %in% class(NAV) ){
+    stop("NAV has to be 'zoo' object")}
   if(sum(is.na(NAV)) >0){
     stop("NAV contain NAs")
-  }else if(sum(is.na(benchmark))>0){
-    stop("benchmark contain NAs")
   }
-
-  NAV.1 = NAV
-  benchmark.1 = benchmark
-
-  df = merge(NAV.1,  benchmark.1, all = F)
-  colnames(df) = c("NAV", "bm")
-  df=df[max(min(which(df$NAV != 1))-1,1):nrow(df),]
-  df[,"bm"]= df[,"bm"]/as.numeric(df[1,"bm"])
-  df[,"NAV"]= df[,"NAV"]/as.numeric(df[1,"NAV"])
-  return.1 = df/lag(df,k=1)
-
-  colnames(return.1) = c("NAV.ret","bm.ret")
-  df =merge(df, return.1)
-  df[1, c("NAV.ret","bm.ret")]=1
-
-  df.w = df[head(endpoints(df,on = "weeks")+1,-1), c("NAV", "bm")] ; df.w=merge(df.w,df.w[,c("NAV","bm")]/lag(df.w[,c("NAV","bm")],k=-1));colnames(df.w)=c("NAV","bm","NAV.ret","bm.ret"); df.w[1, c("NAV.ret","bm.ret")]=1
-  df.m = df[head(endpoints(df,on = "months")+1,-1), c("NAV", "bm")] ; df.m=merge(df.m,df.m[,c("NAV","bm")]/lag(df.m[,c("NAV","bm")],k=-1));colnames(df.m)=c("NAV","bm","NAV.ret","bm.ret"); df.m[1, c("NAV.ret","bm.ret")]=1
-
-
-
+  df = NAV
+  #df=df[max(min(which(df$NAV != 1))-1,1):nrow(df),]
+  df= df/as.numeric(df[1,])
+  ret = df/lag(df,k=1)
+  ret[1, ]=1
+  
+  if(!missing(benchmark)){
+    benchmark= benchmark/as.numeric(benchmark[1,])
+    bm.ret  = benchmark/lag(benchmark,k=1)
+    bm.ret[1, ]=1
+  }
+  
+  df.w = df[head(endpoints(df,on = "weeks")+1,-1), ] ;
+  ret.w=lag(df.w,k=1);
+  ret.w[1, ]=1
+  
+  df.m = df[head(endpoints(df,on = "months")+1,-1), ] ;
+  ret.m=lag(df.m,k=1);
+  ret.m[1, ]=1
+  
   stats <-list()
   #MDD & MDD Date
-  stats[["MDD"]] = maxDrawdown(df[,c("NAV.ret","bm.ret"),drop = FALSE]-1)
+  stats[["MDD"]] = maxDrawdown(ret-1)
   #average DD
-  stats[["averageDD"]] = AverageDrawdown(df[,c("NAV.ret","bm.ret"),drop = FALSE]-1)
+  stats[["averageDD"]] = AverageDrawdown(ret-1)
   #average DD length
-  stats[["averageLength"]] =AverageLength(df[,c("NAV.ret","bm.ret"),drop = FALSE]-1)
+  stats[["averageLength"]] =AverageLength(ret-1)
   #averageRecovery
-  stats[["averageRecovery"]] =AverageRecovery(df[,c("NAV.ret","bm.ret"),drop = FALSE]-1)
+  stats[["averageRecovery"]] =AverageRecovery(ret-1)
   #duration
-  stats[["Year"]]= matrix(rep( as.numeric(index(df)[nrow(df)]-index(df)[1])/365.25,2), ncol = 2, dimnames = list("Year", c("NAV.ret","bm.ret")))
+  stats[["Year"]]= matrix(rep( as.numeric(index(df)[nrow(df)]-index(df)[1])/365.25,ncol(df)),nrow=1)
   #NAV
-  stats[["NAV"]] =matrix(df[nrow(df), c("NAV","bm")], ncol = 2, dimnames = list("NAV", c("NAV.ret","bm.ret")))
-
+  stats[["NAV"]] =df[nrow(df), ,drop=F]
+  
   #SD
-  stats[["SD"]] = matrix(sapply(df[,c("NAV.ret","bm.ret")],sd), ncol = 2, dimnames = list("SD", c("NAV.ret","bm.ret")))
+  stats[["SD"]] = matrix(apply(ret,MARGIN = 2,sd), nrow=1)
   #SD.annunlized
-  stats[["SD.annualized"]] =matrix(stats[["SD"]] *sqrt(nrow(df)/ stats[["Year"]]), ncol = 2, dimnames = list("SD.annualized", c("NAV.ret","bm.ret")))
+  stats[["SD.annualized"]] =matrix(stats[["SD"]] *sqrt(nrow(df)/ stats[["Year"]]), nrow =1)
   #Downside Deviation
-  stats[["DownsideDeviation"]] =DownsideDeviation(df[,c("NAV.ret","bm.ret"),drop = FALSE]-1)
-  #BETA
-  stats[["Beta"]] = c(CAPM.beta(df[,c("NAV.ret"),drop = FALSE]-1,df[,c("bm.ret"),drop = FALSE]-1),1)
-  #BETA.bull
-  stats[["Beta.bull"]] = c(CAPM.beta.bull(df[,c("NAV.ret"),drop = FALSE]-1,df[,c("bm.ret"),drop = FALSE]-1),1)
-  #BETA
-  stats[["Beta.bear"]] = c(CAPM.beta.bear(df[,c("NAV.ret"),drop = FALSE]-1,df[,c("bm.ret"),drop = FALSE]-1),1)
-
-  #Tracking Error
-  stats[["TrackingError"]] = c(TrackingError(df[,c("NAV.ret"),drop = FALSE]-1,df[,c("bm.ret"),drop = FALSE]-1, nrow(df)/stats[["Year"]][1]),0)
+  stats[["DownsideDeviation"]] =DownsideDeviation(ret-1)
+  
+  
   #WorstDailyReturn
-  stats[["WorstDailyReturn"]] = c(min(df[,c("NAV.ret"),drop = FALSE]-1),min(df[,c("bm.ret"),drop = FALSE]-1))
+  stats[["WorstDailyReturn"]] =matrix( apply(ret,2,min),nrow=1)
   #WorstWeeklyReturn
-  stats[["WorstWeeklyReturn"]] = c(min(df.w[,c("NAV.ret"),drop = FALSE]-1),min(df.w[,c("bm.ret"),drop = FALSE]-1))
+  stats[["WorstWeeklyReturn"]] =    matrix( apply(ret.w,2,min),nrow=1)
   #WorstMonthlyReturn
-  stats[["WorstMonthlyReturn"]] = c(min(df.m[,c("NAV.ret"),drop = FALSE]-1),min(df.m[,c("bm.ret"),drop = FALSE]-1))
+  stats[["WorstMonthlyReturn"]] = matrix(  apply(ret.m,2,min),nrow=1)
   #DailyReturn
-  stats[["DailyReturn"]] = matrix(stats[["NAV"]]^(1/nrow(df) )-1, ncol = 2, dimnames = list("DailyReturn", c("NAV.ret","bm.ret")))
+  stats[["DailyReturn"]] = matrix(stats[["NAV"]]^(1/nrow(df) )-1, nrow=1)
   #WeeklyReturn
-  stats[["WeeklyReturn"]] = matrix(stats[["NAV"]]^(1/nrow(df.w) )-1, ncol = 2, dimnames = list("WeeklyReturn", c("NAV.ret","bm.ret")))
+  stats[["WeeklyReturn"]] = matrix(stats[["NAV"]]^(1/nrow(df.w) )-1, nrow=1)
   #DailyWinRate
-  stats[["DailyWinRate"]] = matrix(colSums(df[, c("NAV.ret","bm.ret")]>1) /(colSums(df[, c("NAV.ret","bm.ret")]!=1)), ncol = 2, dimnames = list("DailyWinRate", c("NAV.ret","bm.ret")))
+  stats[["DailyWinRate"]] = matrix(colSums(ret>1)/colSums(ret!=1), nrow=1)
   #WeeklyWinRate
-  stats[["WeeklyWinRate"]] = matrix(colSums(df.w[, c("NAV.ret","bm.ret")]>1) /(colSums(df.w[, c("NAV.ret","bm.ret")]!=1)), ncol = 2, dimnames = list("WeeklyWinRate", c("NAV.ret","bm.ret")))
+  stats[["WeeklyWinRate"]] = matrix(colSums(ret.w>1)/colSums(ret.w!=1), nrow=1)
   #MonthlyWinRate
-  stats[["MonthlyWinRate"]] = matrix(colSums(df.m[, c("NAV.ret","bm.ret")]>1) /(colSums(df.m[, c("NAV.ret","bm.ret")]!=1)), ncol = 2, dimnames = list("MonthlyWinRate", c("NAV.ret","bm.ret")))
-
+  stats[["MonthlyWinRate"]] =  matrix(colSums(ret.m>1)/colSums(ret.m!=1), nrow=1)
   #CAGR
-  stats[["CAGR"]] = matrix(stats[["NAV"]]^(1/stats[["Year"]] )-1, ncol = 2, dimnames = list("CAGR", c("NAV.ret","bm.ret")))
-  #ExcessReturn
-  stats[["ExcessAnnualizedReturn"]] =c(Return.annualized.excess(df[,c("NAV.ret"),drop = FALSE]-1,df[,c("bm.ret"),drop = FALSE]-1,scale = nrow(df)/ stats[["Year"]][1]),0)
+  stats[["CAGR"]] = matrix(stats[["NAV"]]^(1/stats[["Year"]] )-1, nrow = 1)
+  
   #SharpeRatio
-  stats[["SharpeRatio"]] =  SharpeRatio.annualized(df[, c("NAV.ret","bm.ret")]-1, scale=nrow(df)/ stats[["Year"]][1])
-  #InformationRatio
-  stats[["InformationRatio"]] =  c(InformationRatio(df[,c("NAV.ret"),drop = FALSE]-1,df[,c("bm.ret"),drop = FALSE]-1, scale =nrow(df)/stats[["Year"]][1]),NA)
-
-  result = list()
-  result[["stats"]] = do.call(rbind,stats)
-  return(result)
+  stats[["SharpeRatio"]] =  SharpeRatio.annualized(ret-1, scale=nrow(df)/ stats[["Year"]][1])
+  
+  if(!missing(benchmark)){
+    #BETA
+    stats[["Beta"]] = matrix(c(CAPM.beta(ret-1,bm.ret-1),1),nrow=1)
+    #BETA.bull
+    stats[["Beta.bull"]] = matrix(c(CAPM.beta.bull(ret-1,bm.ret-1),1),nrow=1)
+    #BETA.bear
+    stats[["Beta.bear"]] = matrix(c(CAPM.beta.bear(ret-1,bm.ret-1),1),nrow=1)
+    #Tracking Error
+    stats[["TrackingError"]] =matrix( c(TrackingError(ret-1,bm.ret-1, nrow(df)/stats[["Year"]][1]),0),nrow=1)
+    #ExcessReturn
+    stats[["ExcessAnnualizedReturn"]] =matrix(c(Return.annualized.excess(ret-1,bm.ret -1,scale = nrow(df)/ stats[["Year"]][1]),0),nrow=1)
+    #InformationRatio
+    stats[["InformationRatio"]] =  matrix(c(InformationRatio(ret-1,bm.ret-1, scale =nrow(df)/stats[["Year"]][1]),NA),nrow=1)
+    
+  }else{
+    #BETA
+    stats[["Beta"]] = matrix(rep("no BM",ncol(df)),nrow=1)
+    #BETA.bull
+    stats[["Beta.bull"]] = matrix(rep("no BM",ncol(df)),nrow=1)
+    #BETA.bear
+    stats[["Beta.bear"]] =  matrix(rep("no BM",ncol(df)),nrow=1)
+    #Tracking Error
+    stats[["TrackingError"]] = matrix(rep("no BM",ncol(df)),nrow=1)
+    #ExcessReturn
+    stats[["ExcessAnnualizedReturn"]] =  matrix(rep("no BM",ncol(df)),nrow=1)
+    #InformationRatio
+    stats[["InformationRatio"]] = matrix(rep("no BM",ncol(df)),nrow=1)
+    
+  }
+  
+  out = do.call(cbind.data.frame, lapply(stats,t))
+  return(out)
 }
