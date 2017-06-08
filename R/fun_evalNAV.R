@@ -38,8 +38,21 @@ evalNAV <-function(NAV,benchmark=NULL){
   ret.m[1, ]=1
   
   stats <-list()
+  #NAV
+  stats[["NAV"]] =df[nrow(df), ,drop=F]
+  #CAGR
+  stats[["CAGR"]] = matrix(stats[["NAV"]]^(1/stats[["Year"]] )-1, nrow = 1)
+  #SharpeRatio
+  stats[["SharpeRatio"]] =  SharpeRatio.annualized(ret-1, scale=nrow(df)/ stats[["Year"]][1])
+  #SD
+  stats[["SD"]] = matrix(apply(ret,MARGIN = 2,sd), nrow=1)
+  #SD.annunlized
+  stats[["SD.annualized"]] =matrix(stats[["SD"]] *sqrt(nrow(df)/ stats[["Year"]]), nrow =1)
   #MDD & MDD Date
   stats[["MDD"]] = maxDrawdown(ret-1)
+  
+  #Downside Deviation
+  stats[["DownsideDeviation"]] =DownsideDeviation(ret-1)
   #average DD
   stats[["averageDD"]] = AverageDrawdown(ret-1)
   #average DD length
@@ -48,17 +61,6 @@ evalNAV <-function(NAV,benchmark=NULL){
   stats[["averageRecovery"]] =AverageRecovery(ret-1)
   #duration
   stats[["Year"]]= matrix(rep( as.numeric(index(df)[nrow(df)]-index(df)[1])/365.25,ncol(df)),nrow=1)
-  #NAV
-  stats[["NAV"]] =df[nrow(df), ,drop=F]
-  
-  #SD
-  stats[["SD"]] = matrix(apply(ret,MARGIN = 2,sd), nrow=1)
-  #SD.annunlized
-  stats[["SD.annualized"]] =matrix(stats[["SD"]] *sqrt(nrow(df)/ stats[["Year"]]), nrow =1)
-  #Downside Deviation
-  stats[["DownsideDeviation"]] =DownsideDeviation(ret-1)
-  
-  
   #WorstDailyReturn
   stats[["WorstDailyReturn"]] =matrix( apply(ret,2,min),nrow=1)
   #WorstWeeklyReturn
@@ -75,12 +77,7 @@ evalNAV <-function(NAV,benchmark=NULL){
   stats[["WeeklyWinRate"]] = matrix(colSums(ret.w>1)/colSums(ret.w!=1), nrow=1)
   #MonthlyWinRate
   stats[["MonthlyWinRate"]] =  matrix(colSums(ret.m>1)/colSums(ret.m!=1), nrow=1)
-  #CAGR
-  stats[["CAGR"]] = matrix(stats[["NAV"]]^(1/stats[["Year"]] )-1, nrow = 1)
-  
-  #SharpeRatio
-  stats[["SharpeRatio"]] =  SharpeRatio.annualized(ret-1, scale=nrow(df)/ stats[["Year"]][1])
-  
+
   if(!is.null(benchmark)){
     #BETA
     stats[["Beta"]] = matrix(c(CAPM.beta(ret-1,bm.ret-1),1),nrow=1)
