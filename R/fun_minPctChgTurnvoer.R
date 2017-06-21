@@ -8,12 +8,12 @@
 #' 
 minPctChgTurnover <-function(mat, thershold = 0.2, minvalue = 0.005){
   out = mat
-  pos = mat[1,]
+  pos = mat[1,]  #before change position
   for(i in 2:(nrow(out))){
     actionFlag= ((abs(pos/mat[i,]-1))>thershold) & (abs(pos - mat[i,]) >minvalue)
 
     out[i, ] = ifelse(actionFlag, mat[i, ], pos)
-    pos = mat[i, ]
+    pos = out[i, ]
   }
   out
 }

@@ -3,11 +3,11 @@
 #' 
 minTurnover <-function(mat, thershold = 0.05){
   out = mat
-  pos = mat[1,]
+  pos = mat[1,] #before change position
   for(i in 2:(nrow(out))){
     if(sum(abs(pos-mat[i,]))>thershold){
         out[i, ] = mat[i, ]
-        pos = mat[i, ]
+        pos = out[i, ]
     }else{
         out[i, ] = pos
       }
