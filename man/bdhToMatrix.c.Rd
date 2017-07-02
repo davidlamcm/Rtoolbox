@@ -13,9 +13,9 @@ bdhToMatrix.c(bdhList, timeSeries, validDays = 730, lag = 0,
 
 \item{timeSeries}{date or character vector that determine the resulting matrix's rownames}
 
-\item{validDays}{number of days a bdh data is valid since it is published, for price data that only valid for that day, use 1 with lag = 0}
+\item{validDays}{number of CALENDAR days a bdh data is valid since it is published, for price data that only valid for that day, use 1 with lag = 0}
 
-\item{lag}{number of trading day lag, default is 0}
+\item{lag}{number of TRADING day lag, default is 0; 1 mean lag by one trading day}
 
 \item{cl}{cluster that will be used for computation}
 }

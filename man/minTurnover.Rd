@@ -4,7 +4,7 @@
 \alias{minTurnover}
 \title{given a matrix of portfolio composition, minimizee the portfolio turnover}
 \usage{
-minTurnover(mat, thershold = 0.05)
+minTurnover(mat, thershold = 0.005)
 }
 \description{
 given a matrix of portfolio composition, minimizee the portfolio turnover

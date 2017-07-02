@@ -1,7 +1,7 @@
 #' given a matrix of portfolio composition, minimizee the portfolio turnover
 #' @export
 #' 
-minTurnover <-function(mat, thershold = 0.05){
+minTurnover <-function(mat, thershold = 0.005){
   out = mat
   pos = mat[1,] #before change position
   for(i in 2:(nrow(out))){

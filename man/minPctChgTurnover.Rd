@@ -6,14 +6,17 @@
 does not work for negative weight
 it does not guarantee wgt add up to 100%}
 \usage{
-minPctChgTurnover(mat, thershold = 0.2, minvalue = 0.005)
+minPctChgTurnover(mat, thershold = 0.2, minPositionValue = 0.01,
+  clearanceThershold = 0.005)
 }
 \arguments{
 \item{mat}{matrix of turnover}
 
 \item{thershold}{percentage of deviation between target and current}
 
-\item{minvalue}{min size of change in any case}
+\item{minPositionValue}{min position of an asset class, else will be zero}
+
+\item{clearanceThershold}{if theoretical position fall below this thershold, then will clear the existing position}
 }
 \description{
 given a matrix of portfolio composition, minimize the turnover by only changing the position if target vs current is larger than certain percentage
