@@ -4,7 +4,7 @@
 \alias{minPctChgTurnover}
 \title{given a matrix of portfolio composition, minimize the turnover by only changing the position if target vs current is larger than certain percentage
 does not work for negative weight
-it does not guarantee wgt add up to 100%}
+it does not guarantee wgt add up to 100percent}
 \usage{
 minPctChgTurnover(mat, thershold = 0.2, minPositionValue = 0.01,
   clearanceThershold = 0.005)
@@ -21,6 +21,6 @@ minPctChgTurnover(mat, thershold = 0.2, minPositionValue = 0.01,
 \description{
 given a matrix of portfolio composition, minimize the turnover by only changing the position if target vs current is larger than certain percentage
 does not work for negative weight
-it does not guarantee wgt add up to 100%
+it does not guarantee wgt add up to 100percent
 }
 
