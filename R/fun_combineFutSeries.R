@@ -13,16 +13,19 @@ combineFutSeries <-function(futSeries ){
   
   futSeries =   lapply(futSeries,function(x){x[1:(nrow(x)-1),]})
   date = sort(unique(do.call(c, lapply(futSeries, function(x){x$date}))))
-  df = data.frame(last_price = rep(NA,length(date)), volume = rep(NA, length(date)), row.names = date)
+  
+  
+  df = futSeries[[1]][rep(1,length(date)),]
+  rownames(df) = date; colnames(df) = colnames(futSeries[[1]])
+  
   df[as.character(futSeries[[length(futSeries)]]$date),lastPxCol] =  futSeries[[length(futSeries)]][,lastPxCol]
-
-    df[as.character(futSeries[[length(futSeries)]]$date),volumeCol] =  futSeries[[length(futSeries)]][,volumeCol] 
+  df[as.character(futSeries[[length(futSeries)]]$date),volumeCol] =  futSeries[[length(futSeries)]][,volumeCol] 
   for (i in (length(futSeries)-1):1){
-      fut =  futSeries[[i]]
-      ratio  = df[as.character(fut$date[nrow(fut)]),lastPxCol] / fut[,lastPxCol][nrow(fut)]
-      fut[,lastPxCol] = fut[,lastPxCol] * ratio ; fut[,volumeCol] = fut[,volumeCol] / ratio ;
-      df[as.character(fut$date),] = fut[, c(lastPxCol,volumeCol)]
+    fut =  futSeries[[i]]
+    ratio  = df[as.character(fut$date[nrow(fut)]),lastPxCol] / fut[,lastPxCol][nrow(fut)]
+    fut[,lastPxCol] = fut[,lastPxCol] * ratio ; fut[,volumeCol] = fut[,volumeCol] / ratio ;
+    df[as.character(fut$date),] = fut[]
   }
-
+  
   return(df)
 }
