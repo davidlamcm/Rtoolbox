@@ -25,6 +25,6 @@ combineFutSeries <-function(futSeries ){
     df[as.character(fut$date),] = fut[]
   }
 
-  warning("only Volume data is adjusted for price, other colume are not")
+  warning("only Volume data is adjusted for price, other columns are not")
   return(df)
 }
