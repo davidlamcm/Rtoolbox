@@ -8,7 +8,7 @@ combineFutSeries <-function(futSeries ){
   haveEntries = sapply(futSeries,dim)[1,]>= 1
   futSeries = futSeries[haveEntries]
   #trim the last row of each series
-  lastPxCol = match("LAST_PRICE",toupper(colnames(futSeries[[1]])))
+  lastPxCol = na.exclude(match(c("PX_LAST","LAST_PRICE"),toupper(colnames(futSeries[[1]]))))[1]
   volumeCol = match("VOLUME",toupper(colnames(futSeries[[1]])))
   
   futSeries =   lapply(futSeries,function(x){x[1:(nrow(x)-1),]})
