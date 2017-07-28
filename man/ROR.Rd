@@ -9,4 +9,3 @@ ROR(mat, keepNAs = FALSE)
 \description{
 wrapperfunction to calculate return of data.frame/ xts
 }
-

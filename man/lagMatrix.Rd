@@ -9,4 +9,3 @@ lagMatrix(mat, n = 1)
 \description{
 lag a matrix by n days, fill the missing data with the closest one
 }
-

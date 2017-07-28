@@ -15,4 +15,3 @@ given params : capital ... etc
 and list of stock / vwap / turnover
 output the resulting portofolio in a matrix
 }
-

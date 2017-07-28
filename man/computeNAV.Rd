@@ -11,4 +11,3 @@ computeNAV(portfolio, price, vwap)
 given a matrix of portfolio ? and price matrix, compute the NAV of a portoflio
 to be rebuilt / deprecated later
 }
-

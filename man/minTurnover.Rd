@@ -9,4 +9,3 @@ minTurnover(mat, thershold = 0.005)
 \description{
 given a matrix of portfolio composition, minimizee the portfolio turnover
 }
-

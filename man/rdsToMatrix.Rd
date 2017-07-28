@@ -11,4 +11,3 @@ rdsToMatrix(fieldname, filename = NULL, locf = F)
 will be deprecated ,
 dont know the use
 }
-

@@ -9,4 +9,3 @@ getIndexMember(index, date)
 \description{
 give the index ticker, and date (optional) return the list of stock wgt from bloomberg
 }
-

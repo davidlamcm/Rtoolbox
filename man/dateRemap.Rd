@@ -13,4 +13,3 @@ to be deprecated later
 given a data.frame of Fiscal date map it to actual date
 was used to map eps , but doesnt seem very useful now
 }
-

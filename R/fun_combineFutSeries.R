@@ -17,15 +17,14 @@ combineFutSeries <-function(futSeries ){
   
   df = futSeries[[1]][rep(1,length(date)),]
   rownames(df) = date; colnames(df) = colnames(futSeries[[1]])
-  
-  df[as.character(futSeries[[length(futSeries)]]$date),lastPxCol] =  futSeries[[length(futSeries)]][,lastPxCol]
-  df[as.character(futSeries[[length(futSeries)]]$date),volumeCol] =  futSeries[[length(futSeries)]][,volumeCol] 
+  df[as.character(futSeries[[length(futSeries)]]$date),] =  futSeries[[length(futSeries)]][]
   for (i in (length(futSeries)-1):1){
     fut =  futSeries[[i]]
     ratio  = df[as.character(fut$date[nrow(fut)]),lastPxCol] / fut[,lastPxCol][nrow(fut)]
     fut[,lastPxCol] = fut[,lastPxCol] * ratio ; fut[,volumeCol] = fut[,volumeCol] / ratio ;
     df[as.character(fut$date),] = fut[]
   }
-  
+
+  warning("only Volume data is adjusted for price, other colume are not")
   return(df)
 }

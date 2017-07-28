@@ -11,4 +11,3 @@ plotSingleTS(ts, title)
 this function will be deprecated
 wrapper for ggplot
 }
-

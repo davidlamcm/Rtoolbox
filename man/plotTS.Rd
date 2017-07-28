@@ -11,4 +11,3 @@ plotTS(ts, title, additional = F, legend = "fx", ...)
 this function will be deprecated. 
 wrapper for ggplot
 }
-

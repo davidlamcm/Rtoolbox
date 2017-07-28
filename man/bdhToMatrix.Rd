@@ -20,4 +20,3 @@ bdhToMatrix(bdhList, timeSeries, validDays = Inf, lag = 0, cl)
 \description{
 return a list of matrix which comprise of a consolidated value matrix and one date matrix given list of bdh data
 }
-

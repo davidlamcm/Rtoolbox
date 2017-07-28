@@ -19,4 +19,3 @@ getFutChain(futureCode, months = c("F", "G", "H", "J", "K", "M", "N", "Q",
 given future code , list of months code , starting year
 return the list of future code
 }
-

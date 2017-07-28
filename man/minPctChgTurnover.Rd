@@ -23,4 +23,3 @@ given a matrix of portfolio composition, minimize the turnover by only changing 
 does not work for negative weight
 it does not guarantee wgt add up to 100percent
 }
-

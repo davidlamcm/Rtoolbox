@@ -11,4 +11,3 @@ bdhLongToWide(bdhList, cl)
 given a list of stocks with data from bdh function, convert the list into a table 
 cl is the cluster created by doParallel , if this parameter is not given , the function will spawn the cluster itself
 }
-

@@ -14,4 +14,3 @@ getMedian(data, minCount = 1)
 \description{
 given a data matrix, return the median time series
 }
-

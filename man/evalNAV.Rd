@@ -11,4 +11,3 @@ evalNAV(NAV, benchmark = NULL)
 given a time seeries of NAV  and benchmark (optional),
 compute the statistics of the time series
 }
-

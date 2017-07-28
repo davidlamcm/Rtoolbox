@@ -11,4 +11,3 @@ dfToMatrix(df, fieldname, locf = F)
 given a data in long form , covert it to wide form
 will improve the function later before being used again
 }
-

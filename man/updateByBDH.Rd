@@ -13,4 +13,3 @@ updateByBDH(field, CshAdjNormal = F, CshAdjAbnormal = F, CapChg = F,
 will be deprecate
 function to download BDH data and store into rds
 }
-

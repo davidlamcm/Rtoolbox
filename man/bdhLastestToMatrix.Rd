@@ -22,4 +22,3 @@ bdhLastestToMatrix(bdhList, timeSeries, validDays = Inf, lag = 0, cl)
 to be deprecated later 
 return a list of matrix which comprise of a consolidated value matrix and one date matrix given list of bdh data
 }
-

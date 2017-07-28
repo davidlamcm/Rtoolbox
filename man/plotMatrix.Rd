@@ -9,4 +9,3 @@ plotMatrix(mat, title = paste("plot time:", Sys.time()))
 \description{
 given a matrix or xts object, ggplot the series
 }
-

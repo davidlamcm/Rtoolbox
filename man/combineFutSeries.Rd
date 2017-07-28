@@ -11,4 +11,3 @@ combineFutSeries(futSeries)
 given a list of futures chain series , concatenate them into one single time serie
 the list of futures chain series must have the fields c("last_price","volume") or else wont work
 }
-

@@ -11,4 +11,3 @@ conformDF(from, to, locf = F, type = "S")
 convert one data.frame to the format of target data.frame
 S stands for Same, U stands for Union, I stands for Intersect
 }
-
