@@ -30,11 +30,11 @@ evalNAV <-function(NAV,benchmark=NULL){
   }
   
   df.w = df[head(endpoints(df,on = "weeks")+1,-1), ] ;
-  ret.w=lag(df.w,k=1);
+  ret.w=df.w/lag(df.w,k=1);
   ret.w[1, ]=1
   
   df.m = df[head(endpoints(df,on = "months")+1,-1), ] ;
-  ret.m=lag(df.m,k=1);
+  ret.m=df.m/lag(df.m,k=1);
   ret.m[1, ]=1
   
   stats <-list()
