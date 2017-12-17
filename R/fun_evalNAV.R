@@ -20,21 +20,21 @@ evalNAV <-function(NAV,benchmark=NULL){
   df = NAV
   #df=df[max(min(which(df$NAV != 1))-1,1):nrow(df),]
   df= df/as.numeric(df[1,])
-  ret = df/lag(df,k=1)
+  ret = df/stats::lag(df,k=1)
   ret[1, ]=1
   
   if(!is.null(benchmark)){
     bm= benchmark/as.numeric(benchmark[1,])
-    bm.ret  = bm/lag(bm,k=1)
+    bm.ret  = bm/stats::lag(bm,k=1)
     bm.ret[1, ]=1
   }
   
   df.w = df[head(endpoints(df,on = "weeks")+1,-1), ] ;
-  ret.w=df.w/lag(df.w,k=1);
+  ret.w=df.w/stats::lag(df.w,k=1);
   ret.w[1, ]=1
   
   df.m = df[head(endpoints(df,on = "months")+1,-1), ] ;
-  ret.m=df.m/lag(df.m,k=1);
+  ret.m=df.m/stats::lag(df.m,k=1);
   ret.m[1, ]=1
   
   stats <-list()
